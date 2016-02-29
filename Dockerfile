@@ -1,5 +1,12 @@
 FROM phusion/baseimage:0.9.15
-MAINTAINER Stephen Ausman <sausman@stackd.com>
+
+# Original maintainer Stephen Ausman <sausman@stackd.com>
+# Forked from https://github.com/stackd/docker-sabre-dav
+# 
+# Updated SabreDAV version and added Litmus for testing
+# Can now be deployed with Docker-compose
+
+MAINTAINER Nung Bedell <nung.bedell@vtcsecure.com>
 
 # Set the locale
 RUN locale-gen en_US.UTF-8
@@ -27,7 +34,7 @@ RUN chmod +x        /etc/service/php5-fpm/run
 # Set up Sabre DAV
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=bin --filename=composer
 WORKDIR /var/www
-RUN composer require sabre/dav ~2.0.5
+RUN composer require sabre/dav ~3.1.0
 WORKDIR /
 ADD app/server.php          /var/www/server.php
 RUN chown www-data:www-data /var/www/server.php && \

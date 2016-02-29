@@ -1,0 +1,17 @@
+sabredav:
+  build: .
+  ports:
+    - 80:80
+  volumes:
+    - /files:/var/www/files
+  environment:
+    NGINX_AUTH_BASIC: "foo:{PLAIN}bar,bar:{PLAIN}foo"
+
+litmus:
+  build: .
+  dockerfile: Dockerfile.litmus
+  working_dir: /litmus
+  links:
+    - sabredav
+  tty: true
+  command: 'make URL=http://sabredav/ CREDS="foo bar" check'
