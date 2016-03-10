@@ -1,6 +1,7 @@
 <?php
 
-  use Sabre\DAV;
+  use Sabre\DAV,
+      Sabre\DAV\Auth;
 
   // The autoloader
   require 'vendor/autoload.php';
@@ -24,6 +25,16 @@
   // This ensures that we get a pretty index in the browser, but it is
   // optional.
   $server->addPlugin(new DAV\Browser\Plugin());
+
+  // Authorization 
+  $authBackend = new DAV\Auth\Backend\File('/etc/nginx/.htpasswd');
+  $authBackend->setRealm(getenv('REALM'));
+
+  // Creating the plugin.
+  $authPlugin = new DAV\Auth\Plugin($authBackend);
+
+  // Adding the plugin to the server.
+  $server->addPlugin($authPlugin);
 
   // All we need to do now, is to fire up the server
   $server->exec();
