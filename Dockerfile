@@ -18,7 +18,7 @@ ENV LC_ALL en_US.UTF-8
 RUN add-apt-repository -y ppa:nginx/stable && \
   apt-get update && \
   apt-get -y upgrade && \
-  apt-get -y install nginx php5-fpm php5-cli
+  apt-get -y install nginx php5-fpm php5-cli php5-sqlite
 
 # Configure PHP
 RUN sed -i "s/;date.timezone =.*/date.timezone = UTC/" /etc/php5/fpm/php.ini && \
@@ -34,7 +34,7 @@ RUN chmod +x        /etc/service/php5-fpm/run
 # Set up Sabre DAV
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=bin --filename=composer
 WORKDIR /var/www
-RUN composer require sabre/dav ~3.1.0
+RUN composer require sabre/dav ~3.1.2
 WORKDIR /
 ADD app/server.php          /var/www/server.php
 RUN chown www-data:www-data /var/www/server.php && \
