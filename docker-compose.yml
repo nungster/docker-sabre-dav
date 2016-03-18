@@ -5,7 +5,8 @@ sabredav:
   volumes:
     - /files:/var/www/files
   environment:
-    NGINX_AUTH_BASIC: "foo:{PLAIN}bar,bar:{PLAIN}foo"
+    REALM: "sabredav"
+#    NGINX_AUTH_BASIC: "foo:{PLAIN}bar,bar:{PLAIN}foo"
 
 litmus:
   build: .

@@ -49,6 +49,7 @@ VOLUME ["/var/www/files"]
 # Configure Nginx
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 ADD config/nginx.conf     /etc/nginx/sites-available/default
+ADD config/.htpasswd	/etc/nginx/.htpasswd
 ADD run/nginx.sh /etc/service/nginx/run
 RUN chmod +x     /etc/service/nginx/run
 
